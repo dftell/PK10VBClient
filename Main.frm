@@ -63,25 +63,35 @@ Begin VB.Form Form1
       _Version        =   393216
       Style           =   1
       Tabs            =   14
-      Tab             =   7
       TabsPerRow      =   14
       TabHeight       =   520
       BackColor       =   -2147483643
       ForeColor       =   -2147483640
       TabCaption(0)   =   "概况"
       TabPicture(0)   =   "Main.frx":10CA
-      Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "WebBrowser1"
-      Tab(0).Control(1)=   "Timer_Wx"
-      Tab(0).Control(2)=   "Timer_Form"
-      Tab(0).Control(3)=   "Timer_Research"
-      Tab(0).Control(4)=   "frame_CurrInfo"
+      Tab(0).ControlEnabled=   -1  'True
+      Tab(0).Control(0)=   "MSChart1"
+      Tab(0).Control(0).Enabled=   0   'False
+      Tab(0).Control(1)=   "frame_indur"
+      Tab(0).Control(1).Enabled=   0   'False
+      Tab(0).Control(2)=   "Timer_HistoryData"
+      Tab(0).Control(2).Enabled=   0   'False
+      Tab(0).Control(3)=   "Timer_Exchange"
+      Tab(0).Control(3).Enabled=   0   'False
+      Tab(0).Control(4)=   "frame_AllCols"
+      Tab(0).Control(4).Enabled=   0   'False
       Tab(0).Control(5)=   "frame_colChance"
-      Tab(0).Control(6)=   "frame_AllCols"
-      Tab(0).Control(7)=   "Timer_Exchange"
-      Tab(0).Control(8)=   "Timer_HistoryData"
-      Tab(0).Control(9)=   "frame_indur"
-      Tab(0).Control(10)=   "MSChart1"
+      Tab(0).Control(5).Enabled=   0   'False
+      Tab(0).Control(6)=   "frame_CurrInfo"
+      Tab(0).Control(6).Enabled=   0   'False
+      Tab(0).Control(7)=   "Timer_Research"
+      Tab(0).Control(7).Enabled=   0   'False
+      Tab(0).Control(8)=   "Timer_Form"
+      Tab(0).Control(8).Enabled=   0   'False
+      Tab(0).Control(9)=   "Timer_Wx"
+      Tab(0).Control(9).Enabled=   0   'False
+      Tab(0).Control(10)=   "WebBrowser1"
+      Tab(0).Control(10).Enabled=   0   'False
       Tab(0).ControlCount=   11
       TabCaption(1)   =   "交易接口"
       TabPicture(1)   =   "Main.frx":10E6
@@ -118,19 +128,13 @@ Begin VB.Form Form1
       Tab(6).ControlCount=   1
       TabCaption(7)   =   "配置"
       TabPicture(7)   =   "Main.frx":118E
-      Tab(7).ControlEnabled=   -1  'True
-      Tab(7).Control(0)=   "Frame_ExchangeConfig"
-      Tab(7).Control(0).Enabled=   0   'False
-      Tab(7).Control(1)=   "Frame_Config_System"
-      Tab(7).Control(1).Enabled=   0   'False
-      Tab(7).Control(2)=   "Frame_Config_Research"
-      Tab(7).Control(2).Enabled=   0   'False
-      Tab(7).Control(3)=   "btn_saveconfig"
-      Tab(7).Control(3).Enabled=   0   'False
-      Tab(7).Control(4)=   "Frame_Config_Asset"
-      Tab(7).Control(4).Enabled=   0   'False
-      Tab(7).Control(5)=   "grid_config_AssetUnits"
-      Tab(7).Control(5).Enabled=   0   'False
+      Tab(7).ControlEnabled=   0   'False
+      Tab(7).Control(0)=   "grid_config_AssetUnits"
+      Tab(7).Control(1)=   "Frame_Config_Asset"
+      Tab(7).Control(2)=   "btn_saveconfig"
+      Tab(7).Control(3)=   "Frame_Config_Research"
+      Tab(7).Control(4)=   "Frame_Config_System"
+      Tab(7).Control(5)=   "Frame_ExchangeConfig"
       Tab(7).ControlCount=   6
       TabCaption(8)   =   "网络"
       TabPicture(8)   =   "Main.frx":11AA
@@ -165,7 +169,7 @@ Begin VB.Form Form1
       Tab(13).ControlCount=   4
       Begin BJSCSys.MSFlexGridEditor grid_config_AssetUnits 
          Height          =   1935
-         Left            =   8520
+         Left            =   -66480
          TabIndex        =   180
          Top             =   5760
          Width           =   5055
@@ -174,7 +178,7 @@ Begin VB.Form Form1
       End
       Begin SHDocVwCtl.WebBrowser WebBrowser1 
          Height          =   7305
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   177
          Top             =   2190
          Width           =   17085
@@ -261,7 +265,7 @@ Begin VB.Form Form1
       Begin VB.Frame Frame_Config_Asset 
          Caption         =   "资金设置"
          Height          =   3135
-         Left            =   13740
+         Left            =   -61260
          TabIndex        =   85
          Top             =   2250
          Width           =   3675
@@ -386,7 +390,7 @@ Begin VB.Form Form1
       Begin VB.Timer Timer_Wx 
          Enabled         =   0   'False
          Interval        =   15000
-         Left            =   -65775
+         Left            =   9225
          Top             =   30
       End
       Begin VB.Frame Frame_Msg 
@@ -409,7 +413,7 @@ Begin VB.Form Form1
       Begin VB.CommandButton btn_saveconfig 
          Caption         =   "保存"
          Height          =   495
-         Left            =   10290
+         Left            =   -64710
          TabIndex        =   74
          Top             =   9120
          Width           =   1005
@@ -486,18 +490,18 @@ Begin VB.Form Form1
       End
       Begin VB.Timer Timer_Form 
          Interval        =   60000
-         Left            =   -62520
+         Left            =   12480
          Top             =   30
       End
       Begin VB.Timer Timer_Research 
          Interval        =   60000
-         Left            =   -10200
+         Left            =   64800
          Top             =   0
       End
       Begin VB.Frame frame_CurrInfo 
          Caption         =   "最新信息"
          Height          =   555
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   36
          Top             =   450
          Width           =   17145
@@ -584,7 +588,7 @@ Begin VB.Form Form1
       Begin VB.Frame frame_colChance 
          Caption         =   "单列信息"
          Height          =   1485
-         Left            =   -60060
+         Left            =   14940
          TabIndex        =   33
          Top             =   8130
          Visible         =   0   'False
@@ -690,7 +694,7 @@ Begin VB.Form Form1
       Begin VB.Frame frame_AllCols 
          Caption         =   "综合信息"
          Height          =   1305
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   31
          Top             =   8310
          Visible         =   0   'False
@@ -713,18 +717,18 @@ Begin VB.Form Form1
       End
       Begin VB.Timer Timer_Exchange 
          Interval        =   30000
-         Left            =   -63180
+         Left            =   11820
          Top             =   30
       End
       Begin VB.Timer Timer_HistoryData 
          Interval        =   60000
-         Left            =   -64890
+         Left            =   10110
          Top             =   0
       End
       Begin VB.Frame Frame_Config_Research 
          Caption         =   "研究设置"
          Height          =   1875
-         Left            =   30
+         Left            =   -74970
          TabIndex        =   4
          Top             =   5670
          Width           =   7665
@@ -822,7 +826,7 @@ Begin VB.Form Form1
       Begin VB.Frame Frame_Config_System 
          Caption         =   "系统设置"
          Height          =   1815
-         Left            =   30
+         Left            =   -74970
          TabIndex        =   3
          Top             =   450
          Width           =   17385
@@ -1161,7 +1165,7 @@ Begin VB.Form Form1
       Begin VB.Frame Frame_ExchangeConfig 
          Caption         =   "交易设置"
          Height          =   3135
-         Left            =   30
+         Left            =   -74970
          TabIndex        =   2
          Top             =   2250
          Width           =   13605
@@ -1416,7 +1420,7 @@ Begin VB.Form Form1
       Begin VB.Frame frame_indur 
          Caption         =   "指令"
          Height          =   975
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   1
          Top             =   1080
          Width           =   17145
@@ -1652,7 +1656,7 @@ Begin VB.Form Form1
       End
       Begin MSChart20Lib.MSChart MSChart1 
          Height          =   405
-         Left            =   -73230
+         Left            =   1770
          OleObjectBlob   =   "Main.frx":1252
          TabIndex        =   127
          Top             =   2700
