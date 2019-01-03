@@ -702,7 +702,7 @@ Function ReReadInst() As String
     Dim httpreq As XMLHTTP60
     Set httpreq = New XMLHTTP60 ' CreateObject("MSXML2.XMLHTTP.3.0") '
     Dim strurl As String
-    strurl = "http://www.wolfinv.com/pk10/app/requestinsts.asp"
+    strurl = "http://www.wolfinv.com/pk10/app/requestinsts.asp?loginName=" & gobj.ClientUserName
     httpreq.Open "get", strurl, False
     httpreq.setRequestHeader "If-Modified-Since", "0"
     httpreq.send
@@ -725,6 +725,12 @@ Function ReReadInst() As String
         Exit Function
     End If
     ReReadInst = httpreq.responseText
+End Function
+
+
+
+Function ReadTheJsonByUrl(url) As String
+
 End Function
 
 Function Login() As String

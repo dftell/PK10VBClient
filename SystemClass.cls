@@ -30,6 +30,7 @@ Public Ip As Integer
 Dim t_newExpectData() As ExpectData
 Public b_AllowExchange As Boolean
 Public InstsList As Dictionary
+Public AssetUnitList As New Dictionary
 Public ExchangeSwitched As Boolean
 
 Public Property Get AllowExchange() As Boolean
@@ -188,6 +189,19 @@ Public Property Get AssetTotalMaxRate() As Single
     If SysParams.Count > 0 Then AssetTotalMaxRate = SysParams("Asset")("TotalMaxRate")
 End Property
 
+Public Property Get AssetUnits(strid As String) As Integer
+    If SysParams.Count > 0 Then
+        AssetUnits = SysParams("AssetUnits")(strid)
+    Else
+        AssetUnits = 1
+    End If
+End Property
+
+Public Property Let AssetUnits(strid As String, val As Integer)
+    SysParams("AssetUnits")(strid) = val
+End Property
+
+
 Public Property Get AssetTotal() As Single
     If SysParams.Count > 0 Then AssetTotal = SysParams("Asset")("TotalCash")
 End Property
@@ -209,20 +223,20 @@ Public Property Get MinTimeForChance(Times As Integer) As Integer
     End If
 End Property
 
-Public Property Get UnitChipArray(Cols As Integer) As String()
-    If SysParams.Count > 0 Then UnitChipArray = Split(SysParams("Exchange")("Serial" & CStr(Cols)), ",")
+Public Property Get UnitChipArray(cols As Integer) As String()
+    If SysParams.Count > 0 Then UnitChipArray = Split(SysParams("Exchange")("Serial" & CStr(cols)), ",")
 End Property
 
-Public Property Get SerTotal(Cols As Integer) As Integer
+Public Property Get SerTotal(cols As Integer) As Integer
     On Error Resume Next
     If SysParams.Count > 0 Then
         Dim edic As Dictionary
         Set edic = SysParams("Exchange")
-        If Not edic.Exists("SerTotal" & Cols) Then
+        If Not edic.Exists("SerTotal" & cols) Then
             SerTotal = 1
             Exit Property
         End If
-        SerTotal = CInt(SysParams("Exchange")("SerTotal" & CStr(Cols)))
+        SerTotal = CInt(SysParams("Exchange")("SerTotal" & CStr(cols)))
     End If
 End Property
 
@@ -273,11 +287,24 @@ Sub setConfigInfo()
         'Set configitems = node.SelectNodes("item")
         Dim strname As Variant
         For Each strname In configtypeDir.Keys
-           Dim iNode As IXMLDOMNode
+           Dim iNode As IXMLDOMElement
            Set iNode = node.SelectSingleNode(Replace("item[@key='XX']", "XX", strname))
-           iNode.SelectSingleNode("@value").NodeValue = configtypeDir(strname)
+           If iNode Is Nothing Then
+                Set iNode = configDoc.createElement("item")
+                Dim keyatt As IXMLDOMAttribute
+                Dim valatt As IXMLDOMAttribute
+                Set keyatt = configDoc.createAttribute("key")
+                Set valatt = configDoc.createAttribute("value")
+                keyatt.Value = strname
+                valatt.Value = configtypeDir(strname)
+                iNode.setAttribute "key", strname
+                iNode.setAttribute "value", configtypeDir(strname)
+                node.appendChild iNode
+           Else
+                iNode.SelectSingleNode("@value").NodeValue = configtypeDir(strname)
+           End If
         Next
-        configDoc.Save App.Path & "\config.xml"
+        
 ''        For j = 0 To configitems.Length - 1
 ''            Dim Name As String
 ''            Dim Value As String
@@ -286,6 +313,7 @@ Sub setConfigInfo()
 ''            configtypeDir.Add Name, Value
 ''        Next
     Next
+    configDoc.Save App.Path & "\config.xml"
 End Sub
 
 
@@ -305,7 +333,40 @@ End Sub
 Private Sub Class_Initialize()
     getXml
     getConfigInfo
+    InitAssetUnitList
 End Sub
+
+
+Sub InitAssetUnitList()
+    If SysParams.Exists("AssetUnits") = False Then
+        SysParams.Add "AssetUnits", New Dictionary
+    End If
+    Dim ret As String
+    ret = ReadTheJsonByUrl("http://www.wolfinv.com/pk10/app/getAssetLists.asp")
+    Dim jstool As New JsonClass
+    Dim jsobj As Object
+    Set jsobj = jstool.GetJsonVal(ret, "") '根对象
+    Dim UnitCnt As Integer
+    If jsobj Is Nothing Then Exit Sub
+    UnitCnt = jsobj.Count
+    If UnitCnt = 0 Then Exit Sub
+    Dim unitlist As Object
+    Set unitlist = jstool.GetJsonVal(ret, "List")
+    Dim AssetUnits() As Object
+    jstool.ToArray jsobj, "List", AssetUnits
+    For i = 1 To UBound(AssetUnits)
+        AssetUnitList.Add AssetUnits(i).AssetId, AssetUnits(i).AssetName
+    Next
+    
+    Keys = AssetUnitList.Keys
+    Itemss = AssetUnitList.Items
+    For Each strid In AssetUnitList.Keys
+       If SysParams("AssetUnits").Exists(strid) = False Then
+            SysParams("AssetUnits").Add strid, 1
+       End If
+    Next
+End Sub
+
 
 Public Sub FillControl(frm As Form)
     On Error Resume Next
@@ -314,20 +375,50 @@ Public Sub FillControl(frm As Form)
         Dim strItem As Variant
         Dim itemDir As Dictionary
         Set itemDir = SysParams(strtype)
-        For Each strItem In itemDir.Keys
-            Dim configitem As New ConfigClass
-            Set configitem.theForm = frm
-            configitem.ConfigType = strtype
-            configitem.Name = strItem
-            configitem.Value = itemDir(strItem)
-            Dim txtctrl As TextBox
-            Set txtctrl = configitem.Contrl
-            If txtctrl Is Nothing Then
-            Else
-                txtctrl.Text = configitem.Value
-            End If
-        Next
+        If strItem <> "AssetUnits" Then
+            For Each strItem In itemDir.Keys
+                Dim configitem As New ConfigClass
+                Set configitem.theForm = frm
+                configitem.ConfigType = strtype
+                configitem.Name = strItem
+                configitem.Value = itemDir(strItem)
+                Dim txtctrl As TextBox
+                Set txtctrl = configitem.Contrl
+                If txtctrl Is Nothing Then
+                Else
+                    txtctrl.Text = configitem.Value
+                End If
+            Next
+        End If
     Next
+    'fill the asset unit grid
+    Dim unitlist As Dictionary
+    Set unitlist = SysParams("AssetUnits")
+    Dim confGrid As New ConfigClass
+    Set confGrid.theForm = frm
+    confGrid.ConfigType = "AssetUnits"
+    Dim GridEdit As MSFlexGridEditor
+    Dim Grid As MSFlexGrid
+    Set GridEdit = confGrid.Grid
+    Set Grid = GridEdit.Grid
+    Grid.Rows = unitlist.Count + 1
+    Grid.cols = 4
+    Dim cnt As Integer
+    Grid.Text = "资产编号"
+    Grid.TextMatrix(0, 1) = "资产单元号"
+    Grid.TextMatrix(0, 2) = "资产单元名"
+    Grid.TextMatrix(0, 3) = "分配资金倍数"
+    For Each strid In unitlist.Keys
+        cnt = cnt + 1
+        Grid.TextMatrix(cnt, 0) = cnt
+        Grid.TextMatrix(cnt, 1) = strid
+        Grid.TextMatrix(cnt, 2) = AssetUnitList(strid)
+        Grid.TextMatrix(cnt, 3) = unitlist(strid)
+    Next
+
+    
+    
+    
 End Sub
 
 Public Sub SaveConfig(frm As Form)
@@ -337,19 +428,38 @@ Public Sub SaveConfig(frm As Form)
         Dim strItem As Variant
         Dim itemDir As Dictionary
         Set itemDir = SysParams(strtype)
-        For Each strItem In itemDir.Keys
-            Dim configitem As New ConfigClass
-            configitem.Name = strItem
-            configitem.ConfigType = strtype
-            Set configitem.theForm = frm
-            Dim txtctrl As TextBox
-            Set txtctrl = configitem.Contrl
-            If txtctrl Is Nothing Then
-            Else
-                 itemDir(strItem) = txtctrl.Text
-            End If
-        Next
+        If (strtype <> "AssetUnits") Then
+            For Each strItem In itemDir.Keys
+                Dim configitem As New ConfigClass
+                configitem.Name = strItem
+                configitem.ConfigType = strtype
+                Set configitem.theForm = frm
+                Dim txtctrl As TextBox
+                Set txtctrl = configitem.Contrl
+                If txtctrl Is Nothing Then
+                Else
+                     itemDir(strItem) = txtctrl.Text
+                End If
+            Next
+        End If
     Next
+    Dim unitlist As Dictionary
+    Set unitlist = SysParams("AssetUnits")
+    Dim confGrid As New ConfigClass
+    Set confGrid.theForm = frm
+    confGrid.ConfigType = "AssetUnits"
+    Dim GridEdit As MSFlexGridEditor
+    Dim Grid As MSFlexGrid
+    Set GridEdit = confGrid.Grid
+    Set Grid = GridEdit.Grid
+    Dim rowi As Integer
+    For rowi = 1 To Grid.Rows - 1
+        strid = Grid.TextMatrix(rowi, 1)
+        If (unitlist.Exists(strid)) Then
+            unitlist(strid) = Grid.TextMatrix(rowi, 3)
+        End If
+    Next
+    Set SysParams("AssetUnits") = unitlist
     Me.setConfigInfo
 End Sub
 
@@ -360,3 +470,37 @@ Sub test()
     
     
 End Sub
+
+Function ReadTheJsonByUrl(strurl As String) As String
+    On Error Resume Next
+    Dim ret() As ExpectData
+    Dim httpreq As XMLHTTP60
+    Set httpreq = New XMLHTTP60 ' CreateObject("MSXML2.XMLHTTP.3.0") '
+    'Dim strurl As String
+    'strurl = "http://www.wolfinv.com/pk10/app/getAssetLists.asp"
+    httpreq.Open "get", strurl, False
+    httpreq.setRequestHeader "If-Modified-Since", "0"
+    httpreq.setRequestHeader "charset", "utf-8"
+    'setContentType
+    'text/html;charset=utf-8
+    httpreq.send
+
+    Dim stime As Date
+    stime = Now()
+    While httpreq.readyState <> 4
+        DoEvents
+        ntime = Now '获取循环时间
+        If DateDiff("s", stime, ntime) > 3 Then
+            'getHtmlStr = "OutTime"
+            
+            ReReadInst = ""
+            Exit Function '判断超出3秒即超时退出过程
+        End If
+    Wend
+    If httpreq.Status <> 200 Then
+        ReReadInst = ""
+        gobj.LogObj.Log "网页响应错误！"
+        Exit Function
+    End If
+    ReadTheJsonByUrl = httpreq.responseText
+End Function

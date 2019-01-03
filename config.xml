@@ -13,7 +13,7 @@
 			<item key="TotalCnt" value="1"/>
 			<item key="AllowExchange" value="1"/>
 			<item key="IsClient" value="1"/>
-			<item key="ClientUsername" value="gsyh"/>
+			<item key="ClientUsername" value="dftell"/>
 			<item key="ClientPassword" value="abcdef123"/>
 			<item key="LoginUrlModel" value="https://www.kcai{host}.com"/>
 			<item key="LoginDefaultHost" value="331"/>
@@ -67,5 +67,6 @@
 			<item key="AChanceMaxRate" value="125"/>
 			<item key="TotalMaxRate" value="125"/>
 		</config>
+		<config type="AssetUnits"><item key="S00001" value="4"/><item key="S00002" value="5"/><item key="S00004" value="6"/><item key="S00003" value="7"/></config>
 	</configs>
 </root>

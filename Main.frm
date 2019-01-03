@@ -1,17 +1,17 @@
 VERSION 5.00
 Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{65E121D4-0C60-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCHRT20.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form Form1 
    BackColor       =   &H00C0C0C0&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "股票择时策略交易终端"
    ClientHeight    =   10245
    ClientLeft      =   150
-   ClientTop       =   795
+   ClientTop       =   720
    ClientWidth     =   17595
    ForeColor       =   &H80000011&
    Icon            =   "Main.frx":0000
@@ -23,30 +23,27 @@ Begin VB.Form Form1
    StartUpPosition =   3  '窗口缺省
    Begin MSComctlLib.StatusBar StatusBar1 
       Align           =   2  'Align Bottom
-      Height          =   345
+      Height          =   255
       Left            =   0
-      TabIndex        =   79
-      Top             =   9900
+      TabIndex        =   179
+      Top             =   9990
       Width           =   17595
       _ExtentX        =   31036
-      _ExtentY        =   609
+      _ExtentY        =   450
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
          NumPanels       =   3
          BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
-            Object.Width           =   13970
-            MinWidth        =   13970
+            Object.Width           =   7056
+            MinWidth        =   7056
          EndProperty
          BeginProperty Panel2 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Object.Width           =   7056
             MinWidth        =   7056
          EndProperty
          BeginProperty Panel3 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
-            Style           =   5
-            Alignment       =   2
-            Object.Width           =   11642
-            MinWidth        =   11642
-            TextSave        =   "9:39"
+            Object.Width           =   8819
+            MinWidth        =   8819
          EndProperty
       EndProperty
    End
@@ -66,48 +63,38 @@ Begin VB.Form Form1
       _Version        =   393216
       Style           =   1
       Tabs            =   14
+      Tab             =   7
       TabsPerRow      =   14
       TabHeight       =   520
       BackColor       =   -2147483643
       ForeColor       =   -2147483640
       TabCaption(0)   =   "概况"
       TabPicture(0)   =   "Main.frx":10CA
-      Tab(0).ControlEnabled=   -1  'True
-      Tab(0).Control(0)=   "MSChart1"
-      Tab(0).Control(0).Enabled=   0   'False
-      Tab(0).Control(1)=   "frame_indur"
-      Tab(0).Control(1).Enabled=   0   'False
-      Tab(0).Control(2)=   "Timer_HistoryData"
-      Tab(0).Control(2).Enabled=   0   'False
-      Tab(0).Control(3)=   "Timer_Exchange"
-      Tab(0).Control(3).Enabled=   0   'False
-      Tab(0).Control(4)=   "frame_AllCols"
-      Tab(0).Control(4).Enabled=   0   'False
+      Tab(0).ControlEnabled=   0   'False
+      Tab(0).Control(0)=   "WebBrowser1"
+      Tab(0).Control(1)=   "Timer_Wx"
+      Tab(0).Control(2)=   "Timer_Form"
+      Tab(0).Control(3)=   "Timer_Research"
+      Tab(0).Control(4)=   "frame_CurrInfo"
       Tab(0).Control(5)=   "frame_colChance"
-      Tab(0).Control(5).Enabled=   0   'False
-      Tab(0).Control(6)=   "frame_CurrInfo"
-      Tab(0).Control(6).Enabled=   0   'False
-      Tab(0).Control(7)=   "Timer_Research"
-      Tab(0).Control(7).Enabled=   0   'False
-      Tab(0).Control(8)=   "Timer_Form"
-      Tab(0).Control(8).Enabled=   0   'False
-      Tab(0).Control(9)=   "Timer_Wx"
-      Tab(0).Control(9).Enabled=   0   'False
-      Tab(0).Control(10)=   "WebBrowser1"
-      Tab(0).Control(10).Enabled=   0   'False
+      Tab(0).Control(6)=   "frame_AllCols"
+      Tab(0).Control(7)=   "Timer_Exchange"
+      Tab(0).Control(8)=   "Timer_HistoryData"
+      Tab(0).Control(9)=   "frame_indur"
+      Tab(0).Control(10)=   "MSChart1"
       Tab(0).ControlCount=   11
       TabCaption(1)   =   "交易接口"
       TabPicture(1)   =   "Main.frx":10E6
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Timer_WXMsg"
+      Tab(1).Control(0)=   "Frame_Exchange"
       Tab(1).Control(1)=   "Frame_Msg"
-      Tab(1).Control(2)=   "Frame_Exchange"
+      Tab(1).Control(2)=   "Timer_WXMsg"
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "研究"
       TabPicture(2)   =   "Main.frx":1102
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "dg_Research"
-      Tab(2).Control(1)=   "CommonDialog1"
+      Tab(2).Control(0)=   "CommonDialog1"
+      Tab(2).Control(1)=   "dg_Research"
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "最新数据"
       TabPicture(3)   =   "Main.frx":111E
@@ -131,13 +118,20 @@ Begin VB.Form Form1
       Tab(6).ControlCount=   1
       TabCaption(7)   =   "配置"
       TabPicture(7)   =   "Main.frx":118E
-      Tab(7).ControlEnabled=   0   'False
-      Tab(7).Control(0)=   "Frame_Config_Asset"
-      Tab(7).Control(1)=   "btn_saveconfig"
+      Tab(7).ControlEnabled=   -1  'True
+      Tab(7).Control(0)=   "Frame_ExchangeConfig"
+      Tab(7).Control(0).Enabled=   0   'False
+      Tab(7).Control(1)=   "Frame_Config_System"
+      Tab(7).Control(1).Enabled=   0   'False
       Tab(7).Control(2)=   "Frame_Config_Research"
-      Tab(7).Control(3)=   "Frame_Config_System"
-      Tab(7).Control(4)=   "Frame_ExchangeConfig"
-      Tab(7).ControlCount=   5
+      Tab(7).Control(2).Enabled=   0   'False
+      Tab(7).Control(3)=   "btn_saveconfig"
+      Tab(7).Control(3).Enabled=   0   'False
+      Tab(7).Control(4)=   "Frame_Config_Asset"
+      Tab(7).Control(4).Enabled=   0   'False
+      Tab(7).Control(5)=   "grid_config_AssetUnits"
+      Tab(7).Control(5).Enabled=   0   'False
+      Tab(7).ControlCount=   6
       TabCaption(8)   =   "网络"
       TabPicture(8)   =   "Main.frx":11AA
       Tab(8).ControlEnabled=   0   'False
@@ -164,14 +158,23 @@ Begin VB.Form Form1
       TabCaption(13)  =   "6"
       TabPicture(13)  =   "Main.frx":1236
       Tab(13).ControlEnabled=   0   'False
-      Tab(13).Control(0)=   "dg_query"
-      Tab(13).Control(1)=   "txt_execSql"
-      Tab(13).Control(2)=   "btn_exec"
-      Tab(13).Control(3)=   "btn_query"
+      Tab(13).Control(0)=   "btn_query"
+      Tab(13).Control(1)=   "btn_exec"
+      Tab(13).Control(2)=   "txt_execSql"
+      Tab(13).Control(3)=   "dg_query"
       Tab(13).ControlCount=   4
+      Begin BJSCSys.MSFlexGridEditor grid_config_AssetUnits 
+         Height          =   1935
+         Left            =   8520
+         TabIndex        =   180
+         Top             =   5760
+         Width           =   5055
+         _ExtentX        =   8916
+         _ExtentY        =   3413
+      End
       Begin SHDocVwCtl.WebBrowser WebBrowser1 
          Height          =   7305
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   177
          Top             =   2190
          Width           =   17085
@@ -258,7 +261,7 @@ Begin VB.Form Form1
       Begin VB.Frame Frame_Config_Asset 
          Caption         =   "资金设置"
          Height          =   3135
-         Left            =   -61260
+         Left            =   13740
          TabIndex        =   85
          Top             =   2250
          Width           =   3675
@@ -383,7 +386,7 @@ Begin VB.Form Form1
       Begin VB.Timer Timer_Wx 
          Enabled         =   0   'False
          Interval        =   15000
-         Left            =   9225
+         Left            =   -65775
          Top             =   30
       End
       Begin VB.Frame Frame_Msg 
@@ -406,7 +409,7 @@ Begin VB.Form Form1
       Begin VB.CommandButton btn_saveconfig 
          Caption         =   "保存"
          Height          =   495
-         Left            =   -64710
+         Left            =   10290
          TabIndex        =   74
          Top             =   9120
          Width           =   1005
@@ -483,18 +486,18 @@ Begin VB.Form Form1
       End
       Begin VB.Timer Timer_Form 
          Interval        =   60000
-         Left            =   12480
+         Left            =   -62520
          Top             =   30
       End
       Begin VB.Timer Timer_Research 
          Interval        =   60000
-         Left            =   64800
+         Left            =   -10200
          Top             =   0
       End
       Begin VB.Frame frame_CurrInfo 
          Caption         =   "最新信息"
          Height          =   555
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   36
          Top             =   450
          Width           =   17145
@@ -581,7 +584,7 @@ Begin VB.Form Form1
       Begin VB.Frame frame_colChance 
          Caption         =   "单列信息"
          Height          =   1485
-         Left            =   14940
+         Left            =   -60060
          TabIndex        =   33
          Top             =   8130
          Visible         =   0   'False
@@ -687,7 +690,7 @@ Begin VB.Form Form1
       Begin VB.Frame frame_AllCols 
          Caption         =   "综合信息"
          Height          =   1305
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   31
          Top             =   8310
          Visible         =   0   'False
@@ -710,21 +713,21 @@ Begin VB.Form Form1
       End
       Begin VB.Timer Timer_Exchange 
          Interval        =   30000
-         Left            =   11820
+         Left            =   -63180
          Top             =   30
       End
       Begin VB.Timer Timer_HistoryData 
          Interval        =   60000
-         Left            =   10110
+         Left            =   -64890
          Top             =   0
       End
       Begin VB.Frame Frame_Config_Research 
          Caption         =   "研究设置"
          Height          =   1875
-         Left            =   -74970
+         Left            =   30
          TabIndex        =   4
          Top             =   5670
-         Width           =   17385
+         Width           =   7665
          Begin VB.TextBox txt_config_Research_RepeatCheckCnt 
             Height          =   285
             Left            =   4560
@@ -819,7 +822,7 @@ Begin VB.Form Form1
       Begin VB.Frame Frame_Config_System 
          Caption         =   "系统设置"
          Height          =   1815
-         Left            =   -74970
+         Left            =   30
          TabIndex        =   3
          Top             =   450
          Width           =   17385
@@ -998,7 +1001,7 @@ Begin VB.Form Form1
             Caption         =   "最小投注数"
             Height          =   225
             Left            =   6690
-            TabIndex        =   179
+            TabIndex        =   79
             Top             =   900
             Width           =   945
          End
@@ -1158,7 +1161,7 @@ Begin VB.Form Form1
       Begin VB.Frame Frame_ExchangeConfig 
          Caption         =   "交易设置"
          Height          =   3135
-         Left            =   -74970
+         Left            =   30
          TabIndex        =   2
          Top             =   2250
          Width           =   13605
@@ -1413,7 +1416,7 @@ Begin VB.Form Form1
       Begin VB.Frame frame_indur 
          Caption         =   "指令"
          Height          =   975
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   1
          Top             =   1080
          Width           =   17145
@@ -1649,7 +1652,7 @@ Begin VB.Form Form1
       End
       Begin MSChart20Lib.MSChart MSChart1 
          Height          =   405
-         Left            =   1770
+         Left            =   -73230
          OleObjectBlob   =   "Main.frx":1252
          TabIndex        =   127
          Top             =   2700
@@ -1845,7 +1848,7 @@ Private Sub btn_query_Click()
     Dim dt As DataTable
     Set dt = commdb.getDataBySql(sql)
    Dim dgc  As New DataGridClass
-   Set dgc.grid = Me.dg_query
+   Set dgc.Grid = Me.dg_query
    dgc.FillGrid dt
 End Sub
 
@@ -1879,7 +1882,7 @@ Private Sub bucktest_Click()
     frm.Show
 End Sub
 
-Private Sub dg_ExchangeList_MouseDown(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub dg_ExchangeList_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Set ExportGrid = Nothing
     If Button = 2 Then
         Set ExportGrid = Me.dg_ExchangeList
@@ -1903,7 +1906,7 @@ Private Sub dg_ExchangeSummary_DblClick()
     End With
 End Sub
 
-Private Sub dg_Research_MouseDown(Button As Integer, shift As Integer, X As Single, Y As Single)
+Private Sub dg_Research_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Set ExportGrid = Nothing
     With dg_Research
     If Button = 1 And .MouseRow = 0 Then
@@ -2001,7 +2004,7 @@ Public Function ExportFlexDataToExcel(flex As MSFlexGrid, g_CommonDialog As Comm
   On Error GoTo ErrHandler
   Dim xlApp As Object
   Dim xlBook As Object
-  Dim Rows As Integer, Cols As Integer
+  Dim Rows As Integer, cols As Integer
   Dim iRow As Integer, hCol As Integer, iCol As Integer
   Dim New_Col As Boolean
   Dim New_Column As Boolean
@@ -2026,11 +2029,11 @@ Public Function ExportFlexDataToExcel(flex As MSFlexGrid, g_CommonDialog As Comm
 '遍历表格中的记录，传递到Excel中
   With flex
     Rows = .Rows
-    Cols = .Cols
+    cols = .cols
     iRow = 0
     iCol = 1
     Me.MousePointer = vbHourglass
-    For hCol = 0 To Cols - 1
+    For hCol = 0 To cols - 1
        For iRow = 1 To Rows
 '获取表格中值，传递到Excel单元格中
           xlApp.cells(iRow, iCol).Value = .TextMatrix(iRow - 1, hCol)
@@ -2079,6 +2082,11 @@ Private Sub Form_Load()
     End If
     Set Gobalobj = New SystemClass
     Set commdb.gobj = Me.Gobalobj
+    
+    
+    
+    
+    
     Me.Timer_NewestData.InterVal = 10000
     Me.Caption = "策略交易终端[" & Gobalobj.ClientUserName & "]"
     Gobalobj.LogObj.Log "初始化系统....."
@@ -2211,7 +2219,7 @@ Private Sub menu_ExchangeSummary_Click()
     Dim dt As DataTable
     Set dt = cc.getSummary()
    Dim dgc  As New DataGridClass
-   Set dgc.grid = Me.dg_ExchangeSummary
+   Set dgc.Grid = Me.dg_ExchangeSummary
    dgc.FillGrid dt
 End Sub
 
@@ -2299,11 +2307,18 @@ Private Sub menu_getNewestData_Click()
                 Set ccs = ccss(i)
                 If (ccs.ChanceCode = "") Then GoTo ThisEndFor
                 If ccs.UnitCost = "" Then GoTo ThisEndFor
+                '增加资产单元
+                Dim strAssetid As String
+                Dim AssetTimes As Integer
+                strAssetid = ccs.AssetId
+                AssetTimes = Me.Gobalobj.AssetUnits(strAssetid)
+                Dim baseTimes As Long
+                baseTimes = Me.Gobalobj.TotalCnt * AssetTimes
                 If ccs.ChanceType <> 2 Then
                     If ccs.ChanceType = 1 Then
-                        txt(i) = Replace(ccs.ChanceCode, "+", "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(1) & "+") & "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(1)
+                        txt(i) = Replace(ccs.ChanceCode, "+", "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(1) * baseTimes & "+") & "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(1) * baseTimes
                     Else
-                        txt(i) = Replace(ccs.ChanceCode, "+", "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(CInt(ccs.ChipCount)) & "+") & "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(CInt(ccs.ChipCount))
+                        txt(i) = Replace(ccs.ChanceCode, "+", "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(CInt(ccs.ChipCount) * baseTimes) & "+") & "/" & CLng(ccs.UnitCost) * Me.Gobalobj.SerTotal(CInt(ccs.ChipCount)) * baseTimes
                     End If
                 Else '如果是对冲请求
                     If Me.Gobalobj.JoinHedge = False Then '如果不参与对冲,该指令直接去除 2018/7/19
@@ -2311,10 +2326,10 @@ Private Sub menu_getNewestData_Click()
                     Else
                         If Me.Gobalobj.AllowHedge Then  '如果需要下注，增加按指定对冲倍数下注,原始数量要乘以指定倍数 2018/7/19
                             'txt(i) = ccs.ChanceCode & "/" & CStr(CLng(ccs.UnitCost) + ccs.BaseCost ) & "+" & cm.getRevChance(ccs.ChanceCode) & "/" & ccs.BaseCost
-                            txt(i) = ccs.ChanceCode & "/" & CStr(CLng(ccs.UnitCost * Me.Gobalobj.HedgeTimes) + ccs.BaseCost * Me.Gobalobj.HedgeTimes) & "+" & cm.getRevChance(ccs.ChanceCode) & "/" & ccs.BaseCost * Me.Gobalobj.HedgeTimes
+                            txt(i) = ccs.ChanceCode & "/" & CStr(CLng(ccs.UnitCost * Me.Gobalobj.HedgeTimes * baseTimes) + ccs.BaseCost * Me.Gobalobj.HedgeTimes * baseTimes) & "+" & cm.getRevChance(ccs.ChanceCode) & "/" & ccs.BaseCost * Me.Gobalobj.HedgeTimes * baseTimes
                         Else
                             'txt(i) = Trim(ccs.ChanceCode) & "/" & ccs.UnitCost
-                            txt(i) = Trim(ccs.ChanceCode) & "/" & ccs.UnitCost * Me.Gobalobj.HedgeTimes
+                            txt(i) = Trim(ccs.ChanceCode) & "/" & ccs.UnitCost * Me.Gobalobj.HedgeTimes * baseTimes
                         End If
                     End If
                 End If
@@ -2355,7 +2370,7 @@ ThisEndFor:
         Me.txt_CurrExpectCount.Text = dt.RowCount
    End If
    Dim dgc  As New DataGridClass
-   Set dgc.grid = dg_NewestData
+   Set dgc.Grid = dg_NewestData
    dgc.FillGrid dt
    Me.StatusBar1.Panels(1).Text = "获取最新数据！"
    cm.fNewestData = True  '设置当前系统的最新数据标志为真，在刷新界面后重置为否
@@ -2371,7 +2386,7 @@ Private Sub menu_refreshExchange_Click()
     Dim dt As DataTable
     Set dt = cc.getDayData(DateAdd("D", -1, Date))
    Dim dgc  As New DataGridClass
-   Set dgc.grid = Me.dg_ExchangeList
+   Set dgc.Grid = Me.dg_ExchangeList
    dgc.FillGrid dt
 End Sub
 
@@ -2413,10 +2428,6 @@ Private Sub menu_Research_Click()
     Me.txt_config_Research_ValidOldestHistoryExpect.Text = cm.ValidOldestHistoryExpect
     Me.MousePointer = 1
     Me.StatusBar1.Panels(1).Text = "研究结果为最新"
-End Sub
-
-Private Sub MSFlexGrid1_Click()
-
 End Sub
 
 Private Sub menu_running_Click()
@@ -2592,7 +2603,7 @@ Sub initGrid()
     dg_colChances.Clear
     dg_colChances.Rows = 0
     dg_AllChances.Rows = 100
-    dg_AllChances.Cols = 8
+    dg_AllChances.cols = 8
     dg_AllChances.TextMatrix(0, 1) = "2组"
     dg_AllChances.TextMatrix(0, 2) = "3组"
     dg_AllChances.TextMatrix(0, 3) = "4组"
@@ -2617,9 +2628,9 @@ Sub initGrid()
     'dg_AllChances.CellBackColor = dg_AllChances.Container.Gobalobj.BackColor
     
     dg_colChances.Rows = 100
-    dg_colChances.Cols = 10 + 1
+    dg_colChances.cols = 10 + 1
     Dim i As Integer
-    For i = 1 To dg_AllChances.Cols - 1
+    For i = 1 To dg_AllChances.cols - 1
         dg_AllChances.col = i
         If i = 2 Then
             dg_AllChances.row = Gobalobj.MinTimeForChance(3) - Gobalobj.MutliColMinTimes + 1
@@ -2635,7 +2646,7 @@ Sub initGrid()
         End If
     Next
     With dg_colChances
-    For i = 1 To .Cols - 1
+    For i = 1 To .cols - 1
         .col = i
         .row = Gobalobj.MinTimeForChance(3) - Gobalobj.MutliColMinTimes + 1
         .CellBackColor = vbWhite
@@ -2661,7 +2672,7 @@ Sub initGrid()
         dg_colChances.TextMatrix(i, 0) = Replace("X级", "X", i)
     Next
     With Me.dg_Research
-        .Cols = 10
+        .cols = 10
         .Rows = 3000
         .TextMatrix(0, 1) = "最后期次"
         .TextMatrix(0, 2) = "最后时间"
@@ -2742,7 +2753,7 @@ Private Sub txt_selfDifChance_DblClick()
     Me.txt_selfDifChance.Text = Me.cm.getRevChance(Me.txt_selfDifChance.Text)
 End Sub
 
-Private Sub WebBrowser1_DocumentComplete(ByVal pdisp As Object, url As Variant)
+Private Sub WebBrowser1_DocumentComplete(ByVal pDisp As Object, url As Variant)
     On Error Resume Next
     
     If WebBrowser1.readyState < READYSTATE_COMPLETE Then
@@ -2751,7 +2762,7 @@ Private Sub WebBrowser1_DocumentComplete(ByVal pdisp As Object, url As Variant)
     cm.gobj = gobj
     Dim obj As IUnknown
     Set obj = IUnknown
-    If (pdisp Is Me.WebBrowser1.object) Then
+    If (pDisp Is Me.WebBrowser1.object) Then
     Else
         'MsgBox pDisp
     End If

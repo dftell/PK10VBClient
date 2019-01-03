@@ -1,6 +1,6 @@
 AssetClass = 208, 208, 944, 732, C
 ChanceClass = 30, 71, 713, 603, 
-ClassModel = 229, 239, 912, 771, Z
+ClassModel = 229, 239, 912, 771, 
 ExpectData = 0, 0, 683, 532, 
 HistoryDataClass = 234, 234, 917, 766, 
 JsonClass = 260, 260, 943, 792, C
@@ -15,7 +15,7 @@ SystemClass = 52, 52, 735, 584,
 ConfigClass = 156, 156, 839, 688, 
 Form2 = 208, 208, 1021, 740, C, 26, 26, 709, 558, C
 Form1 = 26, 25, 873, 568, , 52, 52, 735, 584, C
-CSubclass = 182, 182, 865, 714, , 104, 104, 787, 636, C
+CSubclass = 182, 182, 865, 714, Z, 104, 104, 787, 636, C
 ResearchItemClass = 0, 0, 0, 0, C
 LogClass = 88, 88, 1097, 325, 
 Form3 = 78, 78, 814, 610, , 130, 130, 813, 662, C

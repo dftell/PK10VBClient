@@ -17,6 +17,7 @@ Public Name As String
 Public Value As String
 Dim frm As Frame
 Const ctrlname = "txt_config_[AA]_[BB]"
+Const gridname = "grid_config_[AA]"
 Public Property Get Contrl() As TextBox
     On Error Resume Next
     Dim strname As String
@@ -30,3 +31,15 @@ Public Property Get Contrl() As TextBox
     End If
 End Property
 
+Public Property Get Grid() As MSFlexGridEditor
+    On Error Resume Next
+    Dim strname As String
+    strname = Replace(gridname, "[AA]", ConfigType)
+    Err.Clear
+    Set Grid = CallByName(theForm, strname, VbGet)
+    If Err.Number <> 0 Then
+        'MsgBox strname
+        Dim i As String
+        i = "test"
+    End If
+End Property
