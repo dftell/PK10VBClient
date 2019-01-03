@@ -1,0 +1,272 @@
+/**
+ * 砸金蛋活动模块脚本
+ * 妖刀<490852916@qq.com>
+ * 2016-01-29
+ */
+var ActionEgg = null;
+
+(function ($) {
+    'use strict';
+
+    /**
+     * 砸金蛋活动
+     * @param {String} dataUrl 开奖数据请求路径
+     */
+    ActionEgg = function (dataUrl) {
+        var self = this,
+            $panel = $('#action-egg');
+
+        // 数据请求路径
+        this.requestUrl = dataUrl;
+
+        // 元件对象
+        this.$mask = $('#action-egg-mask');
+        this.$handler = $('#action-egg-handler');
+        this.$panel = $panel;
+        this.$list = $panel.find('.list:first');
+        this.$item = this.$list.children('i.item');
+        this.$eggs = this.$list.find('i');
+        this.$hammer = $panel.find('.hammer:first');
+        this.$title = $panel.find('h2:first');
+        this.$close = $panel.find('.close:first');
+        this.$result = $panel.find('.result:first');
+
+        // 金蛋数量 - 暂无用
+        this.eggLength = this.$eggs.length;
+
+        // 已开奖对象缓存 - 开奖即存入当前金蛋的index标识
+        this.openedEggs = [2, 3, 5, 8, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 33, 35, 39, 40, 42, 45, 48, 50, 55, 58, 66, 68];
+
+        // 初始化隐藏相关UI
+        this.$panel.hide();
+        this.$hammer.hide();
+
+        // 主界面开启状态
+        this.panelIsOpen = false;
+
+        // 主界面开关
+        this.$handler.add(this.$close)
+            .on('click', function (e) {
+                e.preventDefault();
+                self.toggleView();
+            });
+    };
+
+    // 实现方法
+    ActionEgg.prototype = {
+        // 显隐主界面
+        toggleView: function () {
+            this[this.panelIsOpen ? 'closeView' : 'openView']();
+        },
+
+        // 显示主界面
+        openView: function () {
+            if (this.panelIsOpen) {
+                return;
+            }
+
+            // 变量和对象
+            var self = this;
+
+            // 隐藏入口
+            this.$handler.animate({
+                'right': -200
+            }, function () {
+                // 遮罩显示
+                self.$mask.stop(true, true).fadeIn();
+
+                // 面板打开
+                self.$panel.stop(true, true)
+                    .addClass('panel-in')
+                    .fadeIn(1000, function () {
+                        // 移除样式
+                        $(this).removeClass('panel-in');
+
+                        // 状态更改
+                        self.panelIsOpen = true;
+
+                        // 主界面刷新
+                        self.panelUpdate();
+                    });
+            });
+        },
+
+        // 关闭主界面
+        closeView: function () {
+            if (!this.panelIsOpen) {
+                return;
+            }
+
+            // 对象和变量
+            var self = this;
+
+            // 遮罩退出
+            this.$mask.stop(true, true).fadeOut();
+
+            // 面板退出
+            this.$panel.stop(true, true)
+                .addClass('panel-out')
+                .fadeOut(1000, function () {
+                    // 移除样式
+                    $(this).removeClass('panel-out');
+
+                    // 显示入口
+                    self.$handler.animate({
+                        'right': 20
+                    });
+
+                    // 状态更改
+                    self.panelIsOpen = false;
+
+                    // 主界面刷新
+                    self.panelUpdate();
+                });
+
+            // 清除金蛋砸开样式
+            this.$eggs.removeClass('knocked');
+            this.$result.hide();
+        },
+
+        // 面板对象
+        panelUpdate: function () {
+            // 对象和变量
+            var self = this,
+                aniOn = 'panel-in',
+                aniOff = 'panel-out';
+
+            if (this.panelIsOpen) {
+                // 绑定事件
+                self.$panel.on({
+                    'mousemove.action': function (e) {
+                        e.preventDefault();
+
+                        // 排除关闭按钮
+                        if ($(e.target).is(self.$item)) {
+                            self.hammerShow();
+                        } else {
+                            self.hammerHide();
+                        }
+
+                        // 锤子跟随
+                        self.$hammer.css({
+                            'left': e.pageX - (window.scrollX + this.offsetLeft),
+                            'top': e.pageY - (window.scrollY + this.offsetTop)
+                        });
+                    },
+                    'click.action': function (e) {
+                        // 当前对象
+                        var $target = $(e.target);
+
+                        // 在金蛋上点击时执行开奖
+                        if ($target.hasClass('item')) {
+                            self.knock($target);
+                        }
+                    }
+                });
+            } else {
+                // 解除事件绑定
+                self.$panel.off('.action');
+            }
+
+        },
+
+        // 显示锤子图标
+        hammerShow: function () {
+            if (this.$hammer.is(':visible')) {
+                return;
+            }
+            this.$hammer.stop(true, true).fadeIn();
+        },
+
+        // 隐藏锤子图标
+        hammerHide: function () {
+            if (!this.$hammer.is(':visible')) {
+                return;
+            }
+            this.$hammer.stop(true, true).fadeOut();
+        },
+
+        // 砸开金蛋
+        knock: function (eggObj) {
+            var self = this,
+                opened = this.openedEggs.length,
+                itemIndex = eggObj.index(),
+                options = this.options;
+
+            // 如果已开奖则不执行
+            if (opened >= 1 && $.inArray(itemIndex, self.openedEggs) !== -1) {
+                alertTip("对不起，今天您已参加过活动，每日只能砸蛋一次哦，谢谢您的参与!");
+                return;
+            }
+
+            // 请求开奖数据
+            alertTip("正在为您砸蛋，请稍等...");
+            ctx.postTokenEx({
+                url: this.requestUrl,
+                data: null,
+                success: function (data) {
+                    self.$hammer.addClass('active')
+                    .stop(true, true)
+                    .fadeTo(500, 1, function () {
+                        if (data == -1) {
+                            alertTip("砸金蛋失败，请稍候重试...");
+                        }
+                        else if (data == -2) {
+                            alertTip("正在为您砸蛋，请稍等...");
+                        }
+                        else if (data == -3) {
+                            alertTip("活动未开始或已过期，谢谢您的参与!");
+                        }
+                        else if (data == -4) {
+                            alertTip("对不起，今天您已参加过活动，每日只能砸蛋一次哦，谢谢您的参与!");
+                        }
+                        else if (data == -5 || data == -6) {
+                            alertTip("对不起，您不符合活动规则，无法参与本次活动，谢谢您的参与!");
+                        }
+                        else if (data == -7) {
+                            alertTip("砸金蛋失败，请稍候重试...");
+                        }
+                        else if (data == -8) {
+                            alertTip("活动规则未正确配置，请联系客服，谢谢");
+                        }
+                        else {
+                            // “砸击”后移除动画，以便下次继续显示动画
+                            $(this).removeClass('active');
+
+                            // 添加金蛋砸开样式
+                            eggObj.addClass('knocked');
+
+                            // 开奖效果
+                            self.result(data);
+
+                            // 添加到缓存
+                            self.openedEggs.push(itemIndex);
+
+                            //刷新游戏分数
+                            RefreshUserAgPoint();
+                        }
+                    });
+                },
+                error: function (e) {
+                    alertTip("砸金蛋失败，请稍候重试...");
+                },
+                complete: function () {
+                }
+            });
+        },
+
+        // 显示开奖结果
+        result: function (res) {
+            // 显示开奖提示
+            this.$result.empty()
+                .html('恭喜您本次砸金蛋获得红包金额：<em>' + (res || 1).toFixedNum(3) + '<i>元</i></em>')
+                .hide()
+                .stop(true, true)
+                .addClass('active')
+                .fadeIn(1000, function () {
+                    $(this).removeClass('active');
+                });
+        }
+    };
+
+}(jQuery));

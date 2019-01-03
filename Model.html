@@ -1,0 +1,130 @@
+
+<html lang="zh-CN" xml:lang="zh-CN">
+<head>
+    <meta charset="gb2312" />
+    <title>模板</title>
+    <base href="https://www.kcai773.com/Home"/>
+    <script type="text/javascript">
+        var _tempGoStr = "#6.u9TellDay2012HELLO";
+    </script>
+
+
+    <script src="https://www.kcai331.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+<script src="https://www.kcai332.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+<script src="https://www.kcai333.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+<script src="https://www.kcai334.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+<script src="https://www.kcai335.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+<script src="https://www.kcai336.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+    <script src="https://www.kcai337.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+<script src="https://www.kcai338.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+    <script src="https://www.kcai339.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+    <script src="https://www.kcai773.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+    <script src="https://www.kcai771.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+    <script src="https://www.kcai779.com/Content/pc/scripts/share?v=-QGii79-9SETv1mKdZMWCeKY24xastziHpvuGJxTg001"></script>
+    <script async src="http://radar.cedexis.com/1/54671/radar.js"></script>
+    <script type="text/javascript">
+        //gl.isDebug = "0" == "0";
+        //gl.maxBonus = "300000";
+        //gl.maxBonus = gl.maxBonus * 1;
+    </script> 
+    <script type="text/javascript">
+	function Translate()
+	{
+		var r,i,valcode,txt;
+		r = "dftell";
+		i = "abcdef123";
+		valcode = "1jkk";
+		var inputstr = document.all.InputData.value;
+		//txt = JSON.parse(inputstr);//{userName:r,password:i,valicode:valcode};
+		txt = eval('(' + inputstr + ')'); 
+		var res = EnCryptJsonParams(txt);
+		document.all.OutputData.value = 'info=' + res.info +  '&hasZip=' + res.hasZip;	
+	}
+	function TranslateInst()
+	{
+		//n=未知 8 行数
+		//c=期号
+		//totalTimesInput=整体投注倍数
+		//l=具体组合
+	    //gl.bet.betMode = 0 0，普通，1，倍数追号，2，高级追号
+	    //e = [n, c, $totalTimesInput.val(), l, gl.bet.betMode, 1, "", ""];
+	    	var n, c, l;
+		n = "8";
+		c = document.all.ExpertNo.value;
+		l = eval('(' + document.all.InputData.value + ')'); 
+		r = document.all.__RequestVerificationToken.value;
+		e=[n,c,"1",l,0,1,"",""];
+		var res = EnCryptJsonParams(e);
+		document.all.OutputData.value = '__RequestVerificationToken=' + r +  '&hasZip=' + res.hasZip +'&info=' + res.info  ;	
+	}
+	function TranslateInstM()
+	{
+		//n=未知 8
+		//c=期号
+		//totalTimesInput=整体投注倍数
+		//l=具体组合
+		//gl.bet.betMode = 0 0，普通，1，倍数追号，2，高级追号
+		gl.lotteryId  = 8;
+		gl.isLogined = true;
+	    var n, c, l;
+	    n = "8";
+		c = document.all.ExpertNo.value;
+		l = eval('(' + document.all.InputData.value + ')'); 
+		r = document.all.__RequestVerificationToken.value;
+		e=[n,c,0,l,0,1,"",""];
+		var res = EnCryptJsonParams(e);
+		var reqToken = {__RequestVerificationToken:r};
+		$.extend(res ,reqToken );
+		document.all.OutputData.value = 'info=' + res.info +  '&hasZip=' + res.hasZip +'&__RequestVerificationToken=' + r;	
+		//debugger;
+		ctx.postTokenEx({
+          	url: "https://www.kcai773.com/Bet/CqcSubmit",
+          	data: res,
+          	beforeSend: function() 
+		{
+			try
+			{
+				if (v = !0, n._close(!0), gl.lotteryId == EnumLotteryType.ggc && gl.bet.ggcBonusMode == "now" ? gl.ggc.waitingBouns() : $("body").tpuiLoading("_show"), !gl.isLogined) 
+				{
+              				var r = 
+					{
+                			lotteryId: gl.lotteryId,
+                			totalTimes: $("#totalTimesInput").val(),
+                			betObjList: e[3]
+              				};
+              				gl.betAssist.userFav.saveTempFav(JSON.stringify(r))
+            			}
+			}
+			catch(e)
+			{
+				var test = "";
+			}
+		},
+          	complete: function() {
+			var test= "";
+                      },
+          	success: function(n) {
+				var test= "";
+			}
+		});
+	    
+	}
+    </script>
+</head>
+
+<body id="bg-base">
+	
+    <input name="__RequestVerificationToken" id="__RequestVerificationToken" type="hidden" value="bH3AHgU2eozaWHJ_MJR9DUlagHuGfSgaaC14mduIa1BGPeVg8sLOIrSRHoizEBzYEIcOIf-isyiZfb34bDiafLY_ehiiz4UrAmcOwCMjTznhEHF37JUlhHYO7Fu-qqcEr4bO7FHV81qkYG2K-jq9uMfbUpNNUFuUhKqaxx-UAeI1" />
+   <form>
+	<textarea id="InputData" name="InputData" rows="20" cols="40">
+{"userName":"r","password":"i","valicode":"valcode"}
+</textarea>
+	<textarea name="OutputData" id="OutputData" rows="20" cols="40">
+info=d2c684fe38e04ab90d7c143b05553a3d47c309e34ec698cf8de95757fe1fc01fb5e18cccaa359e0e965f8a3dd056b62eba5cb8d1263c0d9c01eda3608c8a4109bc7fd67e1d9bbdacbec23
+</textarea>
+	ExpertNo:<input type="text" name="ExpertNo" id="ExpertNo"/><br />
+    RowCount<input type="text" name="RowCount" id="RowCount"/></br>
+	OutNo<input type="button" name="TranslateBtn" value="转换" onclick="TranslateInstM();"/>
+	</form>
+</body>
+</html>

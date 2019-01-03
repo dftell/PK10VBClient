@@ -1,0 +1,72 @@
+<root>
+	<configs>
+		<config type="System">
+			<item key="URL" value=""/>
+			<item key="StartCol" value="0"/>
+			<item key="InterVal" value="160"/>
+			<item key="Odds" value="9.78"/>
+			<item key="MutliColMinTimes" value="10"/>
+			<item key="SingleColMinTimes" value="49"/>
+			<item key="BackColor_R" value="205"/>
+			<item key="BackColor_G" value="201"/>
+			<item key="BackColor_B" value="201"/>
+			<item key="TotalCnt" value="1"/>
+			<item key="AllowExchange" value="1"/>
+			<item key="IsClient" value="1"/>
+			<item key="ClientUsername" value="yy789"/>
+			<item key="ClientPassword" value="aa123456"/>
+			<item key="LoginUrlModel" value="http://mg08.{host}.com:1655/"/>
+			<item key="LoginDefaultHost" value="wky68"/>
+			<item key="LoginHostList" value="wky68"/>
+			<item key="LoginInstFillOrEnCode" value="1"/>
+			<item key="LoginInFrame" value="1"/>
+			<item key="AllowHedge" value="0"/>
+			<item key="JoinHedge" value="1"/>
+			<item key="HedgeTimes" value="1"/>
+			<item key="MinChips" value="5"/>
+		</config>
+		<config type="Research">
+			<item key="FromPage" value="10"/>
+			<item key="NewestHistoryExpect" value="684462"/>
+			<item key="SingleCarRepeatCnt" value="2"/>
+			<item key="RepeatCheckCnt" value="1/1"/>
+			<item key="StartCol" value="1"/>
+			<item key="ValidOldestHistoryExpect" value="590965"/>
+		</config>
+		<config type="Exchange">
+			<item key="URL" value="https://wx2.qq.com/cgi-bin/mmwebwx-bin/webwxnewloginpage?ticket=A-QwWEZvwlAvL6GkazlL9IqG@qrticket_0&amp;uuid=Ifr4XWb3HQ==&amp;lang=zh_CN&amp;scan=1508399175"/>
+			<item key="MinTimesFor1" value="70"/>
+			<item key="MinTimesFor2" value="45"/>
+			<item key="MinTimesFor3" value="28"/>
+			<item key="MinTimesFor4" value="22"/>
+			<item key="MinTimesFor5" value="18"/>
+			<item key="MinTimesFor6" value="15"/>
+			<item key="MinTimesFor7" value="11"/>
+			<item key="MinTimesFor8" value="13"/>
+			<item key="Serial1" value="1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,3,3,4,4,5,5,6,7,7,8,9,10,11,13,14,16,18,20,22,25,28,31,34,38,43,48,55,63,72,82,93,107,122,140,160,182,208,238,270,310,360,410,470,590,680,761,850,949,1060,1184,1322,1476,1649,1842,2057,2297,2565,2865,3200,3574,3991,4458,4979,5560,6210,6935,7746,8651,9662,10790"/>
+			<item key="Serial2" value="1,1,1,1,2,2,3,3,4,5,7,9,11,14,18,24,31,40,52,67,87,112,145,188,242,312,405,525,681,873,1118,1433"/>
+			<item key="Serial3" value="1,1,1,2,3,4,6,9,13,19,27,40,58,85,124,180,263,383,558,813,1185,1727,2517,3368,5346,7791,11355,16549,24118"/>
+			<item key="Serial4" value="1,1,2,3,6,10,17,29,50,86,148,255,438,753,1295,2227,3829,6585,11323,19471"/>
+			<item key="Serial5" value="1,2,4,8,17,36,75,157,330,691,1449,30396372,13360"/>
+			<item key="Serial6" value="1,2,6,17,45,124,342,945,2609,7206,19900"/>
+			<item key="Serial7" value="1,4,16,64,256,1024,4096"/>
+			<item key="Serial8" value="1,6,40,270,1800,12000"/>
+			<item key="SerTotal1" value="5"/>
+			<item key="SerTotal2" value="5"/>
+			<item key="SerTotal3" value="5"/>
+			<item key="SerTotal4" value="5"/>
+			<item key="SerTotal5" value="5"/>
+			<item key="SerTotal6" value="0"/>
+			<item key="SerTotal7" value="5"/>
+			<item key="SerTotal8" value="0"/>
+		</config>
+		<config type="Asset">
+			<item key="InitCash" value="20000"/>
+			<item key="Costed" value="0"/>
+			<item key="Gained" value="0"/>
+			<item key="TotalCash" value="20000"/>
+			<item key="AChanceMaxRate" value="125"/>
+			<item key="TotalMaxRate" value="125"/>
+		</config>
+	</configs>
+</root>
